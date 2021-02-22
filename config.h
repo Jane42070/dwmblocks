@@ -1,4 +1,11 @@
+/* macro for conveniently specifying pathu and pathc below */
 #define PATH(name)                      "/home/whoami/github/scripts/dwmblocks/" name
+
+/* buffer size for capturing output of the programs used for updating blocks */
+#define CMDOUTLENGTH                    50
+
+/* buffer size for status text */
+#define STATUSLENGTH                    256
 
 /* DELIMITERENDCHAR must be less than 32.
  * At max, DELIMITERENDCHAR - 1 number of clickable blocks will be allowed.
@@ -10,6 +17,12 @@
  * If you wish to change DELIMITERENDCHAR, don't forget to update its value in
    dwm.c and color codes in your pathu programs. */
 #define DELIMITERENDCHAR                10
+
+/* delimiter specified as an array of characters
+ * don't remove DELIMITERENDCHAR at the end */
+static const char delimiter[] = {' ', DELIMITERENDCHAR };
+
+#include "block.h"
 
 /* If interval of a block is set to 0, the block will only be updated once at
    startup.
@@ -23,7 +36,8 @@
    delivered first. */
 
 /* pathu - path of the program whose output is used as status text of the block
-           (output of the program should end in a null or newline character)
+           (output of the program should be a single line of text with at most
+            one newline character at the end)
  * pathc - path of the program used for handling clicks on the block */
 
 /* 1 interval = INTERVALs seconds, INTERVALn nanoseconds */
@@ -32,18 +46,15 @@
 
 static Block blocks[] = {
 /*      pathu                        pathc    interval        signal */
-		{ PATH("songs"),             NULL,    10,              0},
-		{ PATH("weather"),           NULL,     0,              0},
-        { PATH("packages"),          PATH("packages"),            0,           7},
-        { PATH("meminfo"),           PATH("meminfo_button"),     60,           6},
-        { PATH("disk_info"),         NULL,     10,             5},
-        { PATH("sound"),             PATH("sound_button"),        0,           4},
-        { PATH("battery"),           NULL,    300,             2},
-        { PATH("calendar"),          NULL,     60,             1},
+		{ PATH("songs"),             PATH("music_button"),    10,              2},
+		// { PATH("weather"),           NULL,     0,              0},
+        // { PATH("packages"),          PATH("packages"),         0,           0},
+		{ PATH("meminfo"),           PATH("meminfo_button"),  60,           3},
+        { PATH("disk_info"),         PATH("disk_button"),     10,           4},
+        { PATH("sound"),             PATH("sound_button"),     0,           1},
+        { PATH("battery"),           PATH("battery_button"),  30,           5},
+        { PATH("calendar"),          PATH("test"),     60,             6},
 		{ PATH("wallpaper"),         NULL,    600,             0},
         // { PATH("cpu_temp.sh"),          PATH("cpu_temp_button.sh"),     1,              4},
         { NULL } /* just to mark the end of the array */
 };
-
-/* default delimiter string */
-#define DELIMITER                       " "
