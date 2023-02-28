@@ -12,15 +12,20 @@ case $1 in
 	3) "st" -e "nvim" "$0";;
 	4)
 		notify-send "Synchronizing package databases..."
-		yay -Sy && yay -Qu > /tmp/packages
+		st -i -g 125x30 -e "yay" "-Syu"
+		yay -Qu > /tmp/packages
 		sigdwmblocks 9;;
 	5) rm /tmp/packages;;
 esac
 [ "$1" != "" ] && exit
-if [[ ! -e "/tmp/packages" ]]; then
-	notify-send "Synchronizing package databases..."
-	yay -Sy > /dev/null
-	yay -Qu > /tmp/packages
-fi
+# if [[ ! -e "/tmp/packages" ]]; then
+#     notify-send "Synchronizing package databases..."
+#     yay -Sy > /dev/null
+#     yay -Qu > /tmp/packages
+# fi
+notify-send -t 2000 "Synchronizing package databases..."
+yay -Sy > /dev/null
+yay -Qu > /tmp/packages
 package=`cat /tmp/packages| wc -l`
+notify-send "📦$package are upgradable"
 echo 📦$package
