@@ -1,0 +1,21 @@
+#!/bin/bash
+mem=`free | awk 'NR==2 {printf("%.1f",$3/1024/1024)}'`
+if [[ $mem < 6 ]]; then
+	echo 😆${mem}G
+elif [[ $mem < 9 ]]; then
+	echo 😄${mem}G
+elif [[ $mem < 12 ]]; then
+	echo 😬${mem}G
+elif [[ $mem < 15 ]]; then
+	echo 😠${mem}G
+else
+	echo 😡${mem}G
+	notify-send "High memory usage"
+fi
+["$1" == ""] && exit
+case $1 in
+	1) exec "st" -i -g float -e "htop";;
+	2) ;;
+	3) "st" -e "nvim" "$0";;
+esac
+

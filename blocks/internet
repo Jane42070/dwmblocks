@@ -1,0 +1,32 @@
+#!/bin/sh
+# wifi ，ethernet status
+
+case $1 in
+	1) "st" -i -g -e "nmtui" && sigdwmblocks 7 && exit;;
+	3) "st" -e "nvim" "$0";;
+	# open clash setting
+	4) cfw;;
+	5) notify-send "🌐 Internet module" "\- Click to connect
+📡: no wifi connection
+📶: wifi connection with quality
+❎: no ethernet
+🌐: ethernet working
+🔒: vpn is active ";;
+esac
+
+case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+	down) wifiicon="📡";;
+	up) wifiicon="$(awk 'NR==2 { printf("%s%d% ", "📶",int($17 * 100 / 70)) }' /proc/net/wireless)";;
+esac
+
+# clash is my proxy software
+ps -e | grep clash >/dev/null
+if [[ $? -ne 0 ]]; then
+	vpn=""
+else
+	vpn="🔒"
+fi
+
+# need to using tunnel mode
+# printf "%s%s%s\n" "$wifiicon" "$(sed "s/down/❎/;s/up/🌐/" /sys/class/net/e*/operstate 2>/dev/null)" "$(sed "s/.*/🔒/" /sys/class/net/tun*/operstate 2>/dev/null)"
+printf "%s%s%s\n" "$wifiicon" "$(sed "s/down/❎/;s/up/🌐/" /sys/class/net/e*/operstate 2>/dev/null)" "$vpn"

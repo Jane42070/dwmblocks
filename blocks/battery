@@ -1,0 +1,48 @@
+#!/bin/sh
+# # 现在能量
+# read -r energy_now </sys/class/power_supply/BAT0/energy_now
+# # 满能量
+# read -r energy_full </sys/class/power_supply/BAT0/energy_full
+# val=$(( energy_full-energy_now ))
+# # 当前充电功率
+# 🚨
+# "Full") status="⚡" ;;
+# "Discharging") status="🔋" ;;
+# "Charging") status="🔌" ;;
+# "Not charging") status="🛑" ;;
+# "Unknown") status="♻️" ;;
+# read -r rate </sys/class/power_supply/BAT0/power_now
+# # 当前充电电压
+# read -r vol </sys/class/power_supply/BAT0/voltage_now
+# hr=$(( vol / rate))
+# echo 空载$val
+# echo 功率$rate
+# echo 电压$vol
+# echo 小时$hr
+
+for battery in /sys/class/power_supply/BAT*?; do
+	case "$(cat "$battery/status")" in
+		"Full") status="⚡";;
+		"Discharging") status="🔋" ;;
+		"Charging") status="🔌" ;;
+		"Not charging") status="❗" ;;
+		"Unknown") status="♻️" ;;
+	esac
+	[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="🚨"
+	bat=$(cat $battery/capacity)
+	printf "%s%s%d" "$status" "$warn" "$bat"; unset warn
+done
+
+[ "$1" == "" ] && exit
+
+case $1 in
+	1)
+		[ "$status" = "🔋" ] && notify-send $(acpi | awk '{print $5}')
+		[ "$status" = "🔌" ] && notify-send $(acpi | awk '{print $5}')
+		;;
+	3)
+		"st" -e "nvim" "$0";;
+	4) xbacklight -inc 10;;
+	5) notify-send -t 0 "🔋 Battery module" "🔋: discharging\n❗: not charging\n♻: stagnant charge\n🔌: charging\n⚡: charged\n🚨: battery very low!\nCtrl + Mbutton change adjust xbacklight." ;;
+	6) xbacklight -dec 10;;
+esac

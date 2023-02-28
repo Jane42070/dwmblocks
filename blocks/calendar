@@ -1,0 +1,8 @@
+#!/bin/sh
+echo 📆$(date "+%m-%d %H:%M")
+["$1" == ""] && exit
+case $1 in
+	1) exec "st" -i -g -e "calcurse";;
+	2) notify-send "$(date)";;
+	3) "st" -e "nvim" "$0";;
+esac

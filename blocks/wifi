@@ -1,0 +1,4 @@
+#!/bin/sh
+SSID=`nmcli device wifi list | awk 'NR>1' | dmenu -l 10 | awk '{print $2}'`
+PASS=`echo "Cancel" | dmenu -p "Connect to $SSID, input PASSWD"`
+[ $PASS != "Cancel" ] && nmcli device wifi connect $SSID password $PASS

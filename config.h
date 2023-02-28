@@ -1,5 +1,5 @@
 /* macro for conveniently specifying pathu and pathc below */
-#define PATH(name)                      "/home/qilin/Github/scripts/dwmblocks/" name
+#define PATH(name)                      "/home/qilin/Github/dwmblocks/blocks/" name
 
 /* buffer size for capturing output of the programs used for updating blocks */
 #define CMDOUTLENGTH                    50

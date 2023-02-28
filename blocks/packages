@@ -1,0 +1,26 @@
+#!/bin/sh
+case $1 in
+	# like weather script
+	1)
+		# if [[ ! -e "/tmp/packages" ]]; then
+		#     yay -Sy > /dev/null 1&>2 && yay -Qu > /tmp/packages;;
+		# fi
+		st -i -g 125x30 -e "nvim" "/tmp/packages";;
+	2)
+		notify-send "Synchronizing package databases..."
+		yay -Sy > /dev/null && yay -Qu > /tmp/packages;;
+	3) "st" -e "nvim" "$0";;
+	4)
+		notify-send "Synchronizing package databases..."
+		yay -Sy && yay -Qu > /tmp/packages
+		sigdwmblocks 9;;
+	5) rm /tmp/packages;;
+esac
+[ "$1" != "" ] && exit
+if [[ ! -e "/tmp/packages" ]]; then
+	notify-send "Synchronizing package databases..."
+	yay -Sy > /dev/null
+	yay -Qu > /tmp/packages
+fi
+package=`cat /tmp/packages| wc -l`
+echo 📦$package
