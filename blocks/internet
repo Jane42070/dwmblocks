@@ -5,7 +5,7 @@ case $1 in
 	1) "st" -i -g -e "nmtui" && sigdwmblocks 7 && exit;;
 	3) "st" -e "nvim" "$0";;
 	# open clash setting
-	4) cfw;;
+	4) cfw && sigdwmblocks 7 && exit;;
 	5) notify-send "🌐 Internet module" "\- Click to connect
 📡: no wifi connection
 📶: wifi connection with quality

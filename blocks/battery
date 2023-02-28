@@ -20,18 +20,23 @@
 # echo 电压$vol
 # echo 小时$hr
 
-for battery in /sys/class/power_supply/BAT*?; do
-	case "$(cat "$battery/status")" in
-		"Full") status="⚡";;
-		"Discharging") status="🔋" ;;
-		"Charging") status="🔌" ;;
-		"Not charging") status="❗" ;;
-		"Unknown") status="♻️" ;;
-	esac
-	[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="🚨"
-	bat=$(cat $battery/capacity)
-	printf "%s%s%d" "$status" "$warn" "$bat"; unset warn
-done
+# battery if not exist on a desktop
+if [[ -e /sys/class/power_supply/BAT*? ]]; then
+	for battery in /sys/class/power_supply/BAT*?; do
+		case "$(cat "$battery/status")" in
+			"Full") status="⚡";;
+			"Discharging") status="🔋" ;;
+			"Charging") status="🔌" ;;
+			"Not charging") status="❗" ;;
+			"Unknown") status="♻️" ;;
+		esac
+		[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="🚨"
+		bat=$(cat $battery/capacity)
+		printf "%s%s%d" "$status" "$warn" "$bat"; unset warn
+	done
+else
+	echo "🔌"
+fi
 
 [ "$1" == "" ] && exit
 
