@@ -21,8 +21,8 @@
 # echo 小时$hr
 
 # battery if not exist on a desktop
-if [[ -e /sys/class/power_supply/BAT*? ]]; then
-	for battery in /sys/class/power_supply/BAT*?; do
+for battery in /sys/class/power_supply/BAT*?; do
+	if [[ -e $battery/status ]]; then
 		case "$(cat "$battery/status")" in
 			"Full") status="⚡";;
 			"Discharging") status="🔋" ;;
@@ -33,10 +33,10 @@ if [[ -e /sys/class/power_supply/BAT*? ]]; then
 		[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="🚨"
 		bat=$(cat $battery/capacity)
 		printf "%s%s%d" "$status" "$warn" "$bat"; unset warn
-	done
-else
-	echo "🔌"
-fi
+	else
+		echo "🔌"
+	fi
+done
 
 [ "$1" == "" ] && exit
 
