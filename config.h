@@ -48,7 +48,7 @@ static Block blocks[] = {
 /*      pathu                        pathc    interval        signal */
 		{ PATH("songs"),             PATH("songs"),        10,           2},
 		{ PATH("weather"),           PATH("weather"),       0,           8},
-        { PATH("packages"),          PATH("packages"),    600,           9},
+        { PATH("packages"),          PATH("packages"),   1200,           9},
 		{ PATH("meminfo"),           PATH("meminfo"),      10,           3},
         { PATH("disk"),              PATH("disk"),         10,           4},
         { PATH("sound"),             PATH("sound"),         0,           1},
