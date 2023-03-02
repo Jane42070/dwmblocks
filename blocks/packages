@@ -2,30 +2,35 @@
 case $1 in
 	# like weather script
 	1)
-		# if [[ ! -e "/tmp/packages" ]]; then
-		#     yay -Sy > /dev/null 1&>2 && yay -Qu > /tmp/packages;;
-		# fi
-		st -i -g 125x30 -e "nvim" "/tmp/packages";;
+		if [[ ! -e "/tmp/packages" ]]; then
+			notify-send "Please synchronize package databases first"
+		else
+			st -i -g 125x30 -e "nvim" "/tmp/packages"
+		fi
+		;;
 	2)
 		notify-send "Synchronizing package databases..."
-		yay -Sy > /dev/null && yay -Qu > /tmp/packages;;
+		yay -Sy > /dev/null && yay -Qu > /tmp/packages
+		sigdwmblocks 9;;
 	3) "st" -e "nvim" "$0";;
 	4)
 		notify-send "Synchronizing package databases..."
 		st -i -g 125x30 -e "yay" "-Syu"
 		yay -Qu > /tmp/packages
 		sigdwmblocks 9;;
-	5) rm /tmp/packages;;
+	5) notify-send "delete /tmp/packages" && rm /tmp/packages;;
 esac
 [ "$1" != "" ] && exit
-# if [[ ! -e "/tmp/packages" ]]; then
-#     notify-send "Synchronizing package databases..."
-#     yay -Sy > /dev/null
-#     yay -Qu > /tmp/packages
-# fi
-notify-send -t 2000 "Synchronizing package databases..."
-yay -Sy > /dev/null
-yay -Qu > /tmp/packages
-package=`cat /tmp/packages| wc -l`
+if [[ ! -e "/tmp/packages" ]]; then
+	# notify-send "Synchronizing package databases..."
+	# yay -Sy > /dev/null
+	# yay -Qu > /tmp/packages
+	package=`yay -Qu | wc -l`
+else
+	package=`cat /tmp/packages | wc -l`
+fi
+# notify-send -t 2000 "Synchronizing package databases..."
+# yay -Sy > /dev/null
+# yay -Qu > /tmp/packages
 notify-send "📦$package are upgradable"
 echo 📦$package
