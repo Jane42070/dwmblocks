@@ -9,6 +9,8 @@ case $1 in
 		fi
 		;;
 	2)
+		ps -e | grep clash >/dev/null
+		[[ $? -ne 0 ]] && ep
 		notify-send "Synchronizing package databases..."
 		yay -Sy > /dev/null && yay -Qu > /tmp/packages
 		sigdwmblocks 9;;
@@ -32,5 +34,6 @@ fi
 # notify-send -t 2000 "Synchronizing package databases..."
 # yay -Sy > /dev/null
 # yay -Qu > /tmp/packages
+[[ $package -eq 0 ]] && echo 📦$package && notify-send "You are up to date" && exit 0
 notify-send "📦$package are upgradable"
 echo 📦$package

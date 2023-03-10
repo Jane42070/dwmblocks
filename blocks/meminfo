@@ -14,7 +14,7 @@ else
 fi
 ["$1" == ""] && exit
 case $1 in
-	1) exec "st" -i -g float -e "htop";;
+	1) exec "st" -i -g float -e "btop";;
 	2) ;;
 	3) "st" -e "nvim" "$0";;
 esac
