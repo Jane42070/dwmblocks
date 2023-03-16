@@ -1,5 +1,5 @@
 #!/bin/bash
-mem=`free | awk 'NR==2 {printf("%.1f",$3/1024/1024)}'`
+mem=`grep Active: /proc/meminfo | awk '{printf("%.1f",$2/1024/1024)}'`
 if [[ $mem < 6 ]]; then
 	echo 😆${mem}G
 elif [[ $mem < 9 ]]; then
