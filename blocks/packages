@@ -34,6 +34,6 @@ fi
 # notify-send -t 2000 "Synchronizing package databases..."
 # yay -Sy > /dev/null
 # yay -Qu > /tmp/packages
-[[ $package -eq 0 ]] && echo 📦$package && notify-send "You are up to date" && exit 0
+[ $package -eq 0 ] && echo 📦$package && exit 0
 notify-send "📦$package are upgradable"
 echo 📦$package
