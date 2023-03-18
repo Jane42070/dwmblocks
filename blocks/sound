@@ -1,11 +1,19 @@
 #!/bin/sh
+# 判断pulseaudio是否启动
+ps -e | grep pulseaudio >/dev/null
+[ $? -ne 0 ] && pulseaudio --start
 case $1 in
 	1) "st" -i -g -e "pulsemixer" && sigdwmblocks 1 && exit;;
 	2) pamixer -t && sigdwmblocks 1 && exit;;
 	3) "st" -e "nvim" "$0";;
-	4) pamixer -i 2 && sigdwmblocks 1 && exit;;
-	5) notify-send "Volume🖱️" "中键 🔇\nCtrl 右键 +🔉\nCtrl 左键 -🔉";;
-	6) pamixer -d 2 && sigdwmblocks 1 && exit;;
+	4) pamixer -i 5 && sigdwmblocks 1 && exit;;
+	5)
+		notify-send "Volume🖱️" """
+		Middle Click 🔇
+		Ctrl Right Click +🔉
+		Ctrl Left Click -🔉
+		""";;
+	6) pamixer -d 5 && sigdwmblocks 1 && exit;;
 esac
 [ $(pamixer --get-mute) = true ] && echo 🔇 && exit
 voice="$(pamixer --get-volume)"
