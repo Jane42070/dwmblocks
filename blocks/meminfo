@@ -1,20 +1,14 @@
 #!/bin/bash
-mem=`free | awk 'NR==2 {printf("%.1f",$3/1024/1024)}'`
-if [[ $mem < 6 ]]; then
-	echo 😆${mem}G
-elif [[ $mem < 9 ]]; then
-	echo 😄${mem}G
-elif [[ $mem < 12 ]]; then
-	echo 😬${mem}G
-elif [[ $mem < 15 ]]; then
-	echo 😠${mem}G
-else
-	echo 😡${mem}G
-fi
+mem=`free | awk 'NR==2 {printf("🧠%.1fG",$3/1024/1024)}'`
+cputemp=`sensors | awk '/Core 0/ {print "🌡" $3}'`
+echo $cputemp $mem
 ["$1" == ""] && exit
 case $1 in
 	1) exec "st" -i -g float -e "btop";;
-	2) ;;
+	2) notify-send "🖥 CPU module " "\- Shows CPU temperature.
+- Ctrl + Right click to show intensive processes.
+- Click to open btop." ;;
 	3) "st" -e "nvim" "$0";;
+	6) notify-send "🖥 CPU hogs" "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)\\n(100% per core)" ;;
 esac
 
