@@ -1,11 +1,11 @@
 #!/bin/sh
 case $1 in
-	1) "$TERMINAL" -i -g -e "ncmpcpp";;
+	1) "$TERMINAL" -i -g -e "ncmpcpp" && sigdwmblocks 2 && exit 0;;
 	2) mpc --port='6666' toggle;;
 	3) "$TERMINAL" -e "$EDITOR" "$0";;
-	4) mpc --port='6666' prev && sigdwmblocks 2 && exit;;
+	4) mpc --port='6666' prev && sigdwmblocks 2 && exit 0;;
 	5) notify-send "音乐帮助" "中键暂停\nCtrl + 右键 下一首\nCtrl + 左键 上一首";;
-	6) mpc --port='6666' next && sigdwmblocks 2 && exit;;
+	6) mpc --port='6666' next && sigdwmblocks 2 && exit 0;;
 esac
 #echo 🎵
 name=`mpc --port='6666' current`
