@@ -1,9 +1,0 @@
-#!/bin/sh
-# mount $(cat /proc/partitions | awk 'NR>3{print "/dev/"$4}' | dmenu -p "Which disk to mount")
-# disks=$(find /dev/sd[a-z][1-9])
-for disk in $(find /dev/sd[a-z][1-9]); do
-	disks+=$disk"\n"
-done
-disk=$(echo -e $disks|dmenu -p "Which disk to mount")
-point="/home/$(whoami)/Disk"
-[ "$disk" != "" ] && mount -r $disk $point
