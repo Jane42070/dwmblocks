@@ -49,7 +49,7 @@ static Block blocks[] = {
 		{ PATH("songs"),             PATH("songs"),         0,           2},
         { PATH("packages"),          PATH("packages"),      0,           9},
 		{ PATH("news"),              PATH("news"),          0,          10},
-		{ PATH("mailbox"),           PATH("mailbox"),     180,           8},
+		{ PATH("mailbox"),           PATH("mailbox"),       0,           8},
 		{ PATH("meminfo"),           PATH("meminfo"),       5,           3},
         { PATH("disk"),              PATH("disk"),         10,           4},
         { PATH("sound"),             PATH("sound"),         0,           1},
