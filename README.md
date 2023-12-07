@@ -7,13 +7,13 @@ signaling, clickability, cursor hinting and color.
 
 `dwmblocks`
 
-# Modifying blocks
+# Configuration
 
-Blocks are added and removed by editing [config.h](config.h) file. Some other
-configurations can also be done through the file. Read it for more info.
+Refer to [config.h](config.def.h). It allows addition/removal of blocks and a
+few other configurations.
 
-> Change the PATH macro defined at the top of the file. It should point to the
-> folder where your scripts are saved.
+> `make`, the first time you run it, or `make config.h` will create config.h by
+> copying [config.def.h](config.def.h).
 
 > The provided blocks use siji font for icons.
 
@@ -31,7 +31,7 @@ that block is executed with the first argument specifying which button was
 clicked (1 for left, 2 for middle and 3 for right).
 
 Colored output is inspired by statuscolors patch for dwm. To add colors, have
-your programs for the blocks output raw characters from `\x0b` to `\x31`. `\x0b`
+your programs for the blocks output raw characters from `\x0b` to `\x1f`. `\x0b`
 in status text switches active colorscheme to the first one in the colors array
 defined in dwm's config.h and so on. See
 [statuscolors patch for dwm](https://dwm.suckless.org/patches/statuscolors/)
@@ -53,7 +53,8 @@ A tiny program to get the current root name. May prove helpful in debugging.
 Clone the repository and run
 ```
 cd dwmblocks
-sudo make install clean
+make
+sudo make install
 ```
 
 # Acknowledgements

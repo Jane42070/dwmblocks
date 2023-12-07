@@ -4,11 +4,8 @@
 /* buffer size for capturing output of the programs used for updating blocks */
 #define CMDOUTLENGTH                    50
 
-/* buffer size for status text */
-#define STATUSLENGTH                    256
-
 /* DELIMITERENDCHAR must be less than 32.
- * At max, DELIMITERENDCHAR - 1 number of clickable blocks will be allowed.
+ * At max, DELIMITERENDCHAR - 1 number of clickable blocks are allowed.
  * Raw characters larger than DELIMITERENDCHAR and smaller than ' ' in ASCII
    character set can be used for signaling color change in status.
  * The character corresponding to DELIMITERENDCHAR + 1 ('\x0b' when
@@ -19,8 +16,8 @@
 #define DELIMITERENDCHAR                16
 
 /* delimiter specified as an array of characters
- * don't remove DELIMITERENDCHAR at the end */
-static const char delimiter[] = {' ', DELIMITERENDCHAR };
+ * (don't remove DELIMITERENDCHAR at the end) */
+static const char delimiter[] = { ' ', DELIMITERENDCHAR };
 
 #include "block.h"
 
